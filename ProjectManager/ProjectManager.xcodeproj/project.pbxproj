@@ -85,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				A334148E28C86AA80059D133 /* ToDoItem.swift */,
+				D7E75DA128D0AB8F00C32947 /* ProjectType.swift */,
 				A37C3BA428CCC2C300CE4F50 /* MockToDoItemManager.swift */,
 				A37C3BA628CCC3D700CE4F50 /* sample.json */,
 			);
@@ -97,7 +98,6 @@
 				D7E75DA328D0AC8100C32947 /* ProjectTableHeaderView.swift */,
 				D7E75DA528D0C2EF00C32947 /* ProjectTableView.swift */,
 				D7C465DA28C76584004B64F7 /* ProjectTableViewCell.swift */,
-				A3420F8D28CCD3F2004AFF56 /* ProjectDetailViewController.swift */,
 			);
 			path = ProjectTableView;
 			sourceTree = "<group>";
@@ -162,10 +162,17 @@
 		D7971F5128CE1982008C7ADA /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				D7E75DA128D0AB8F00C32947 /* ProjectType.swift */,
 				D7971F4F28CE196E008C7ADA /* ToDoComponentsView.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		D7A6069028D1D49800247972 /* ProjectDetailView */ = {
+			isa = PBXGroup;
+			children = (
+				A3420F8D28CCD3F2004AFF56 /* ProjectDetailViewController.swift */,
+			);
+			path = ProjectDetailView;
 			sourceTree = "<group>";
 		};
 		D7C465C728C71E03004B64F7 /* Resources */ = {
@@ -201,7 +208,6 @@
 			isa = PBXGroup;
 			children = (
 				C7431F0925F51E1D0094C4CF /* MainViewController.swift */,
-				A39C1FD328CE1CD000009A15 /* RegistrationView */,
 				A334149728C8EEA10059D133 /* ProjectTableView */,
 			);
 			path = MainView;
@@ -212,6 +218,8 @@
 			children = (
 				D7971F5128CE1982008C7ADA /* Common */,
 				D7C465D128C71F15004B64F7 /* MainView */,
+				D7A6069028D1D49800247972 /* ProjectDetailView */,
+				A39C1FD328CE1CD000009A15 /* RegistrationView */,
 			);
 			path = View;
 			sourceTree = "<group>";

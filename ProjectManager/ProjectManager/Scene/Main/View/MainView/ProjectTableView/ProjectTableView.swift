@@ -32,8 +32,7 @@ class ProjectTableView: UITableView {
         projectHeaderView = ProjectTableHeaderView(with: .todo)
         mockToDoItemManger = MockToDoItemManager()
         super.init(coder: coder)
-    }
-    
+    } 
         
     // MARK: - Functions
     

@@ -1,26 +1,45 @@
 //
-//  RegistrationViewController.swift
+//  ProjectDetailViewController.swift
 //  ProjectManager
 //
-//  Created by brad, bard. on 2022/09/11.
+//  Created by brad, bard on 2022/09/10.
 //
 
 import UIKit
 
-final class RegistrationViewController: UIViewController {
+final class ProjectDetailViewController: UIViewController {
     
     // MARK: - Properties
-    
+
     private let toDoComponentsView = ToDoComponentsView()
-    
+    private let tableView: UITableView
+
     // MARK: View Life Cycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
     }
     
+    // MARK: - Initializers
+
+    init(with tableView: UITableView) {
+        self.tableView = tableView
+        super.init(nibName: nil, bundle: nil)
+        guard let tableView = self.tableView as? ProjectTableView else { return }
+        navigationItem.title = tableView.getTitle()
+    }
+    
+    required init?(coder: NSCoder) {
+        tableView = UITableView()
+        super.init(coder: coder)
+    }
+    
     // MARK: - Functions
+    
+    func loadData(of item: ToDoItem) {
+        toDoComponentsView.configure(of: item)
+    }
     
     private func setupUI() {
         setupNavigationController()
@@ -30,7 +49,7 @@ final class RegistrationViewController: UIViewController {
     }
     
     private func setupView() {
-        view.backgroundColor = .systemBackground
+        self.view.backgroundColor = .systemBackground
     }
     
     private func setupSubviews() {
@@ -38,18 +57,18 @@ final class RegistrationViewController: UIViewController {
     }
     
     private func setupNavigationController() {
-        navigationItem.title = Design.navigationTitle
         navigationController?.navigationBar.titleTextAttributes = [
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: Design.navigationTitleFontSize, weight: .bold)
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: Design.navigationTitleFontSize,
+                                                           weight: .bold)
         ]
         navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.9488992095, green: 0.9492433667, blue: 0.9632378221, alpha: 1)
         
         let rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done,
                                                  target: self,
                                                  action: #selector(didDoneButtonTapped))
-        let leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel,
-                                                target: self,
-                                                action: #selector(didCancelButtonTapped))
+        let leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit,
+                                                 target: self,
+                                                action: #selector(didEditButtonTapped))
         
         navigationItem.rightBarButtonItem = rightBarButtonItem
         navigationItem.leftBarButtonItem = leftBarButtonItem
@@ -70,18 +89,17 @@ final class RegistrationViewController: UIViewController {
     
     // MARK: - objc Functions
     
-    @objc private func didDoneButtonTapped() {
+    @objc private func didEditButtonTapped() {
         dismissViewController()
     }
     
-    @objc private func didCancelButtonTapped() {
+    @objc private func didDoneButtonTapped() {
         dismissViewController()
     }
     
     // MARK: - Name Space
     
     private enum Design {
-        static let navigationTitle = "TODO"
         static let navigationTitleFontSize: CGFloat = 20
     }
 }

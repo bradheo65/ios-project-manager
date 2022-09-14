@@ -78,7 +78,8 @@ final class MainViewController: UIViewController {
     private func setupNavigationController() {
         navigationController?.navigationBar.topItem?.title = Design.navigationTitle
         navigationController?.navigationBar.titleTextAttributes = [
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: Design.navigationTitleFontSize, weight: .bold)
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: Design.navigationTitleFontSize,
+                                                           weight: .bold)
         ]
         
         let rightBarButton = UIBarButtonItem(image: UIImage(systemName: Design.plusImage),
@@ -210,6 +211,5 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource, UIGest
         toDoListDetailViewController.loadData(of: mockToDoItemManger.content(index: indexPath.row) ?? ToDoItem())
         
         present(navigationController, animated: true)
-    }
-    
+    } 
 }
