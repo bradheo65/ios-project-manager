@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 final class ToDoComponentsView: UIView {
     
@@ -80,16 +81,18 @@ final class ToDoComponentsView: UIView {
     
     // MARK: - Functions
     
-    func fetchItem() -> ToDoItem {
+    func fetchItem() -> RealmToDoItem {
+        let item = RealmToDoItem()
+        item.title = titleTextField.text ?? ""
+        item.toDoDescription = descriptionTextView.text ?? ""
+        item.timeLimit = timeLimitDatePicker.date
         
-        return ToDoItem(title: titleTextField.text ?? "",
-                        description: descriptionTextView.text ?? "",
-                        timeLimit: timeLimitDatePicker.date)
+        return item
     }
     
-    func configure(of item: ToDoItem) {
+    func configure(of item: RealmToDoItem) {
         titleTextField.text = item.title
-        descriptionTextView.text = item.description
+        descriptionTextView.text = item.toDoDescription
         timeLimitDatePicker.setDate(item.timeLimit, animated: true)
     }
     

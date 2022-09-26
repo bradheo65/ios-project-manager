@@ -43,7 +43,7 @@ final class ProjectDetailViewController: UIViewController {
     
     // MARK: - Functions
     
-    func loadData(of item: ToDoItem) {
+    func loadData(of item: RealmToDoItem) {
         toDoComponentsView.configure(of: item)
     }
     

@@ -6,45 +6,24 @@
 //
 
 import Foundation
+import RealmSwift
 
 final class AlertViewModel {
     
     // MARK: - Singletone
 
-    private let mainViewModel = MainViewModel.shared
+    private let localDataManager = LocalDataManager.shared
     
     // MARK: - Functions
 
-    func searchContent(from index: Int, of type: ProjectType) -> ToDoItem {
+    func searchContent(from index: Int, of type: ProjectType) -> RealmToDoItem {
         switch type {
         case .todo:
-            return mainViewModel.todoContent.get(index: index) ?? ToDoItem()
+            return localDataManager.todoList.get(index: index) ?? RealmToDoItem()
         case .doing:
-            return mainViewModel.doingContent.get(index: index) ?? ToDoItem()
+            return localDataManager.doingList.get(index: index) ?? RealmToDoItem()
         case .done:
-            return mainViewModel.doneContent.get(index: index) ?? ToDoItem()
-        }
-    }
-    
-    func append(new item: ToDoItem, to type: ProjectType) {
-        switch type {
-        case .todo:
-            mainViewModel.todoContent.append(item)
-        case .doing:
-            mainViewModel.doingContent.append(item)
-        case .done:
-            mainViewModel.doneContent.append(item)
-        }
-    }
-    
-    func delete(from index: Int, of type: ProjectType) {
-        switch type {
-        case .todo:
-            mainViewModel.todoContent.remove(at: index)
-        case .doing:
-            mainViewModel.doingContent.remove(at: index)
-        case .done:
-            mainViewModel.doneContent.remove(at: index)
+            return localDataManager.doneList.get(index: index) ?? RealmToDoItem()
         }
     }
     
@@ -53,5 +32,13 @@ final class AlertViewModel {
         
         append(new: movingContent, to: anotherProject)
         delete(from: index.row, of: project)
+    }
+    
+    private func append(new item: RealmToDoItem, to type: ProjectType) {
+        localDataManager.create(with: item, with: type)
+    }
+    
+    private func delete(from index: Int, of type: ProjectType) {
+        localDataManager.delete(index: index, with: type)
     }
 }

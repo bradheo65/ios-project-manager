@@ -6,56 +6,43 @@
 //
 
 import Foundation
+import RealmSwift
 
 final class ProjectTableViewModel {
     
     // MARK: - Singletone
 
-    private let mainViewModel = MainViewModel.shared
+    private let localDataManager = LocalDataManager.shared
     
     // MARK: - Functions
 
     func count(of type: ProjectType) -> Int {
         switch type {
         case .todo:
-            return mainViewModel.todoContent.count
+            return localDataManager.todoList.count
         case .doing:
-            return mainViewModel.doingContent.count
+            return localDataManager.doingList.count
         case .done:
-            return mainViewModel.doneContent.count
+            return localDataManager.doneList.count
         }
     }
     
-    func searchContent(from index: Int, of type: ProjectType) -> ToDoItem {
+    func searchContent(from index: Int, of type: ProjectType) -> RealmToDoItem {
         switch type {
         case .todo:
-            return mainViewModel.todoContent.get(index: index) ?? ToDoItem()
+            return localDataManager.todoList.get(index: index) ?? RealmToDoItem()
         case .doing:
-            return mainViewModel.doingContent.get(index: index) ?? ToDoItem()
+            return localDataManager.doingList.get(index: index) ?? RealmToDoItem()
         case .done:
-            return mainViewModel.doneContent.get(index: index) ?? ToDoItem()
+            return localDataManager.doneList.get(index: index) ?? RealmToDoItem()
         }
     }
     
-    func update(item: ToDoItem, from index: Int, of type: ProjectType) {
-        switch type {
-        case .todo:
-            mainViewModel.todoContent[index] = item
-        case .doing:
-            mainViewModel.doingContent[index] = item
-        case .done:
-            mainViewModel.doneContent[index] = item
-        }
+    func update(item: RealmToDoItem, from index: Int, of type: ProjectType) {
+        localDataManager.update(item: item, from: index, of: type)
     }
     
     func delete(from index: Int, of type: ProjectType) {
-        switch type {
-        case .todo:
-            mainViewModel.todoContent.remove(at: index)
-        case .doing:
-            mainViewModel.doingContent.remove(at: index)
-        case .done:
-            mainViewModel.doneContent.remove(at: index)
-        }
+            localDataManager.delete(index: index, with: type)
     }
 }

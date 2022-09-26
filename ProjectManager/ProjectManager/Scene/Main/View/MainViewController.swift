@@ -5,12 +5,13 @@
 // 
 
 import UIKit
+import RealmSwift
 
 final class MainViewController: UIViewController {
     
     // MARK: - Properties
     
-    private let mainViewModel = MainViewModel.shared
+    private let localDataManager = MainViewModel()
     
     private lazy var toDoListTableView = ProjectTableView(for: .todo)
     private lazy var doingListTableView = ProjectTableView(for: .doing)
@@ -45,17 +46,17 @@ final class MainViewController: UIViewController {
     }
     
     private func setupSubscripting() {
-        mainViewModel.todoSubscripting { [weak self] _ in
+        localDataManager.todoSubscripting { [weak self] _ in
             self?.toDoListTableView.reloadData()
             self?.toDoListTableView.setupIndexLabel()
         }
         
-        mainViewModel.doingSubscripting { [weak self] _ in
+        localDataManager.doingSubscripting { [weak self] _ in
             self?.doingListTableView.reloadData()
             self?.doingListTableView.setupIndexLabel()
         }
         
-        mainViewModel.doneSubscripting { [weak self] _ in
+        localDataManager.doneSubscripting { [weak self] _ in
             self?.doneListTableView.reloadData()
             self?.doneListTableView.setupIndexLabel()
         }
@@ -63,7 +64,7 @@ final class MainViewController: UIViewController {
     
     private func setupDelegates() {
         [toDoListTableView, doingListTableView, doneListTableView]
-            .forEach { $0.presetDelegate = self }
+            .forEach { $0.presentDelegate = self }
     }
     
     private func setupSubviews() {

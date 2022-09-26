@@ -74,7 +74,7 @@ final class RegistrationViewController: UIViewController {
     // MARK: - objc Functions
     
     @objc private func didDoneButtonTapped() {
-        registrationViewModel.append(new: toDoComponentsView.fetchItem(), to: .todo)
+        registrationViewModel.append(new: toDoComponentsView.fetchItem())
         dismissViewController()
     }
     

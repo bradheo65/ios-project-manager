@@ -66,16 +66,16 @@ final class ProjectTableViewCell: UITableViewCell {
     
     // MARK: - Functions
     
-    func configure(data: ToDoItem, type: ProjectType) {
+    func configure(data: RealmToDoItem, type: ProjectType) {
         titleLabel.text = data.title
-        descriptionLabel.text = data.description
+        descriptionLabel.text = data.toDoDescription
         timeLimitLabel.text = data.timeLimit.formatDate()
         
         guard type != .done else { return }
         setuptimeLimitLabelColor(data)
     }
     
-    private func setuptimeLimitLabelColor(_ data: ToDoItem) {
+    private func setuptimeLimitLabelColor(_ data: RealmToDoItem) {
         guard data.timeLimit < Date() else {
             timeLimitLabel.textColor = .black
             return

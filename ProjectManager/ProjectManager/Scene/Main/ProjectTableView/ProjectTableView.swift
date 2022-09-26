@@ -11,7 +11,7 @@ final class ProjectTableView: UITableView {
     
     // MARK: - Properties
     
-    var presetDelegate: Presentable?
+    var presentDelegate: Presentable?
     
     private let projectType: ProjectType
     
@@ -92,7 +92,7 @@ final class ProjectTableView: UITableView {
         popoverController.sourceView = cell
         popoverController.sourceRect = cell?.bounds ?? Design.defaultRect
         
-        presetDelegate?.presentAlert(alertController)
+        presentDelegate?.presentAlert(alertController)
     }
     
     // MARK: - Name Space
@@ -136,7 +136,7 @@ extension ProjectTableView: UITableViewDelegate, UITableViewDataSource {
         toDoListDetailViewController.loadData(of: projectTableViewModel.searchContent(from: indexPath.row,
                                                                                       of: projectType))
         toDoListDetailViewController.sendData(of: projectType, in: indexPath.row)
-        presetDelegate?.presentDetail(navigationController)
+        presentDelegate?.presentDetail(navigationController)
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
