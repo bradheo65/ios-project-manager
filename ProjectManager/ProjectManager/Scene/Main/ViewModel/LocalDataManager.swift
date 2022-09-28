@@ -13,8 +13,6 @@ final class MainViewModel {
     
     let localDatManager = LocalDataManager.shared
     
-//    lazy var sample = localDatManager.read(with: <#T##[RealmToDoItem]#>)
-    
     var todoList: [RealmToDoItem] = [] {
         didSet {
             todoListener?(todoList)
@@ -69,38 +67,51 @@ final class LocalDataManager {
     
     private let realm = try? Realm()
     
-    var todoList: [RealmToDoItem] = []
+    var todoList: [RealmToDoItem] = [] {
+        didSet {
+            todoListener?(todoList)
+        }
+    }
 
-    var doingList: [RealmDoingItem] = []
+    var doingList: [RealmDoingItem] = [] {
+        didSet {
+            doingListener?(doingList)
+        }
+    }
 
-    var doneList: [RealmDoneItem] = []
+    var doneList: [RealmDoneItem] = [] {
+        didSet {
+            doneListener?(doneList)
+        }
+    }
     
-//    private var todoListener: (([RealmToDoItem]) -> Void)?
-//    private var doingListener: (([RealmDoingItem]) -> Void)?
-//    private var doneListener: (([RealmDoneItem]) -> Void)?
+    private var todoListener: (([RealmToDoItem]) -> Void)?
+    private var doingListener: (([RealmDoingItem]) -> Void)?
+    private var doneListener: (([RealmDoneItem]) -> Void)?
     
     // MARK: - Initializers
 
     private init() {
         read()
+        print(Realm.Configuration.defaultConfiguration.fileURL!)
     }
     
     // MARK: - Functions
     
-//    func todoSubscripting(listener: @escaping ([RealmToDoItem]) -> Void) {
-//        listener(todoList)
-//        self.todoListener = listener
-//    }
-//
-//    func doingSubscripting(listener: @escaping ([RealmDoingItem]) -> Void) {
-//        listener(doingList)
-//        self.doingListener = listener
-//    }
-//
-//    func doneSubscripting(listener: @escaping ([RealmDoneItem]) -> Void) {
-//        listener(doneList)
-//        self.doneListener = listener
-//    }
+    func todoSubscripting(listener: @escaping ([RealmToDoItem]) -> Void) {
+        listener(todoList)
+        self.todoListener = listener
+    }
+
+    func doingSubscripting(listener: @escaping ([RealmDoingItem]) -> Void) {
+        listener(doingList)
+        self.doingListener = listener
+    }
+
+    func doneSubscripting(listener: @escaping ([RealmDoneItem]) -> Void) {
+        listener(doneList)
+        self.doneListener = listener
+    }
     
     // MARK: - CRUD
     
@@ -112,13 +123,6 @@ final class LocalDataManager {
         todoList = Array(todoResult)
         doingList = Array(doingResult)
         doneList = Array(doneResult)
-    }
-    
-    func read(with item: [RealmToDoItem]) -> [RealmToDoItem] {
-        guard let result = realm?.objects(RealmToDoItem.self) else { return [] }
-        todoList = Array(result)
-        
-        return todoList
     }
     
     // create

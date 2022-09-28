@@ -11,7 +11,7 @@ final class MainViewController: UIViewController {
     
     // MARK: - Properties
     
-    private let localDataManager = MainViewModel()
+    private let localDataManager = LocalDataManager.shared
     
     private lazy var toDoListTableView = ProjectTableView(for: .todo)
     private lazy var doingListTableView = ProjectTableView(for: .doing)
