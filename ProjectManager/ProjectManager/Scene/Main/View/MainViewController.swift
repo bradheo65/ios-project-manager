@@ -11,11 +11,12 @@ final class MainViewController: UIViewController {
     
     // MARK: - Properties
     
-    private let localDataManager = LocalDataManager.shared
+    private let dataManager = LocalDataManager()
+    lazy var mainViewModel = MainViewModel(with: dataManager)
     
-    private lazy var toDoListTableView = ProjectTableView(for: .todo)
-    private lazy var doingListTableView = ProjectTableView(for: .doing)
-    private lazy var doneListTableView = ProjectTableView(for: .done)
+    private lazy var toDoListTableView = ProjectTableView(for: .todo, to: mainViewModel.projectTableViewModel)
+    private lazy var doingListTableView = ProjectTableView(for: .doing, to: mainViewModel.projectTableViewModel)
+    private lazy var doneListTableView = ProjectTableView(for: .done, to: mainViewModel.projectTableViewModel)
         
     private let horizontalStackView: UIStackView = {
         let stackView = UIStackView()
@@ -46,17 +47,17 @@ final class MainViewController: UIViewController {
     }
     
     private func setupSubscripting() {
-        localDataManager.todoSubscripting { [weak self] _ in
+        dataManager.todoSubscripting { [weak self] _ in
             self?.toDoListTableView.reloadData()
             self?.toDoListTableView.setupIndexLabel()
         }
         
-        localDataManager.doingSubscripting { [weak self] _ in
+        dataManager.doingSubscripting { [weak self] _ in
             self?.doingListTableView.reloadData()
             self?.doingListTableView.setupIndexLabel()
         }
         
-        localDataManager.doneSubscripting { [weak self] _ in
+        dataManager.doneSubscripting { [weak self] _ in
             self?.doneListTableView.reloadData()
             self?.doneListTableView.setupIndexLabel()
         }
@@ -108,7 +109,7 @@ final class MainViewController: UIViewController {
     // MARK: - objc Functions
     
     @objc private func didPlusButtonTapped() {
-        let registrationViewController = RegistrationViewController()
+        let registrationViewController = RegistrationViewController(with: mainViewModel.registrationViewModel)
         let navigationController = UINavigationController(rootViewController: registrationViewController)
         
         registrationViewController.modalPresentationStyle = .formSheet

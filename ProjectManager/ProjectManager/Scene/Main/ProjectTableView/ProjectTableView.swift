@@ -17,12 +17,13 @@ final class ProjectTableView: UITableView {
     
     private var projectHeaderView: ProjectTableHeaderView
     
-    private let projectTableViewModel = ProjectTableViewModel()
+    private let projectTableViewModel: ProjectTableViewModel
     
     // MARK: Initializers
     
-    init(for projectType: ProjectType) {
+    init(for projectType: ProjectType, to viewModel: ProjectTableViewModel) {
         self.projectType = projectType
+        self.projectTableViewModel = viewModel
         projectHeaderView = ProjectTableHeaderView(with: projectType)
         super.init(frame: .zero, style: .plain)
         commonInit()
@@ -30,6 +31,7 @@ final class ProjectTableView: UITableView {
     
     required init?(coder: NSCoder) {
         projectType = .todo
+        projectTableViewModel = ProjectTableViewModel(dataManager: MockToDoItemManager())
         projectHeaderView = ProjectTableHeaderView(with: .todo)
         super.init(coder: coder)
     }
@@ -84,7 +86,8 @@ final class ProjectTableView: UITableView {
         
         let alertController = AlertViewController(with: projectType,
                                                   by: indexPath,
-                                                  tableView: self)
+                                                  tableView: self,
+                                                  viewModel: projectTableViewModel.alertViewModel)
         guard let popoverController = alertController.popoverPresentationController else { return }
         
         let cell = cellForRow(at: indexPath)
@@ -128,7 +131,7 @@ extension ProjectTableView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let toDoListDetailViewController = ProjectDetailViewController(with: tableView)
+        let toDoListDetailViewController = ProjectDetailViewController(with: tableView, viewModel: projectTableViewModel)
         let navigationController = UINavigationController(rootViewController: toDoListDetailViewController)
         
         toDoListDetailViewController.modalPresentationStyle = .formSheet

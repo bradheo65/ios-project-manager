@@ -10,35 +10,32 @@ import RealmSwift
 
 final class AlertViewModel {
     
-    // MARK: - Singletone
+    // MARK: - Properties
 
-    private let localDataManager = LocalDataManager.shared
+    let dataManager: DataManagable
+    
+    init(dataManager: DataManagable) {
+        self.dataManager = dataManager
+    }
     
     // MARK: - Functions
 
-    func searchContent(from index: Int, of type: ProjectType) -> RealmToDoItem {
-        switch type {
-        case .todo:
-            return localDataManager.todoList.get(index: index) ?? RealmToDoItem()
-        case .doing:
-            return localDataManager.doingList.get(index: index) ?? RealmToDoItem()
-        case .done:
-            return localDataManager.doneList.get(index: index) ?? RealmToDoItem()
-        }
+    func searchContent(from index: Int, of type: ProjectType) -> ToDoItem {
+        dataManager.read(from: index, of: type)
+    }
+    
+    func append(new item: ToDoItem, to type: ProjectType) {
+        dataManager.create(with: item, to: type)
+    }
+    
+    func delete(from index: Int, of type: ProjectType) {
+        dataManager.delete(index: index, with: type)
     }
     
     func move(project: ProjectType, in index: IndexPath, to anotherProject: ProjectType) {
         let movingContent = searchContent(from: index.row, of: project)
-        
+
         append(new: movingContent, to: anotherProject)
         delete(from: index.row, of: project)
-    }
-    
-    private func append(new item: RealmToDoItem, to type: ProjectType) {
-        localDataManager.create(with: item, with: type)
-    }
-    
-    private func delete(from index: Int, of type: ProjectType) {
-        localDataManager.delete(index: index, with: type)
     }
 }

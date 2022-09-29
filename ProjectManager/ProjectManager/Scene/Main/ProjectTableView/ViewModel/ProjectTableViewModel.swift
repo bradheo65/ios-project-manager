@@ -10,39 +10,31 @@ import RealmSwift
 
 final class ProjectTableViewModel {
     
-    // MARK: - Singletone
-
-    private let localDataManager = LocalDataManager.shared
+    // MARK: - Properties
+    
+    let dataManager: DataManagable
+    lazy var projectDetailViewModel = ProjectDetailViewModel(dataManager: dataManager)
+    lazy var alertViewModel = AlertViewModel(dataManager: dataManager)
+    
+    init(dataManager: DataManagable) {
+        self.dataManager = dataManager
+    }
     
     // MARK: - Functions
 
     func count(of type: ProjectType) -> Int {
-        switch type {
-        case .todo:
-            return localDataManager.todoList.count
-        case .doing:
-            return localDataManager.doingList.count
-        case .done:
-            return localDataManager.doneList.count
-        }
+        return dataManager.count(with: type)
     }
     
-    func searchContent(from index: Int, of type: ProjectType) -> RealmToDoItem {
-        switch type {
-        case .todo:
-            return localDataManager.todoList.get(index: index) ?? RealmToDoItem()
-        case .doing:
-            return localDataManager.doingList.get(index: index) ?? RealmToDoItem()
-        case .done:
-            return localDataManager.doneList.get(index: index) ?? RealmToDoItem()
-        }
+    func searchContent(from index: Int, of type: ProjectType) -> ToDoItem {
+        return dataManager.read(from: index, of: type)
     }
     
-    func update(item: RealmToDoItem, from index: Int, of type: ProjectType) {
-        localDataManager.update(item: item, from: index, of: type)
+    func update(item: ToDoItem, from index: Int, of type: ProjectType) {
+        dataManager.update(item: item, from: index, of: type)
     }
     
     func delete(from index: Int, of type: ProjectType) {
-            localDataManager.delete(index: index, with: type)
+        dataManager.delete(index: index, with: type)
     }
 }

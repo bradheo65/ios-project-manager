@@ -10,13 +10,17 @@ import RealmSwift
 
 class ProjectDetailViewModel {
     
-    let localDataManager = LocalDataManager.shared
+    let dataManager: DataManagable
     
-    func append(new item: RealmToDoItem, to type: ProjectType) {
-        localDataManager.create(with: item, with: type)
+    init(dataManager: DataManagable) {
+        self.dataManager = dataManager
     }
     
-    func update(item: RealmToDoItem, from index: Int, of type: ProjectType) {
-        localDataManager.update(item: item, from: index, of: type)
+    func append(new item: ToDoItem, to type: ProjectType) {
+        dataManager.create(with: item, to: type)
+    }
+    
+    func update(item: ToDoItem, from index: Int, of type: ProjectType) {
+        dataManager.update(item: item, from: index, of: type)
     }
 }

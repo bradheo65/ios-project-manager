@@ -5,17 +5,19 @@
 //  Created by brad, bard on 2022/09/22.
 //
 
-import RealmSwift
-
 final class RegistrationViewModel {
+
+    // MARK: - Properties
     
-    // MARK: - Singletone
+    let dataManager: DataManagable
     
-    private let localDataManager = LocalDataManager.shared
+    init(dataManager: DataManagable) {
+        self.dataManager = dataManager
+    }
     
     // MARK: - Functions
-    
-    func append(new item: RealmToDoItem) {
-        localDataManager.create(with: item, with: .todo)
+
+    func append(new item: ToDoItem, to type: ProjectType) {
+        dataManager.create(with: item, to: type)
     }
 }

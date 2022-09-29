@@ -1,43 +1,45 @@
 //
-//  ToDoItem.swift
+//  RealmToDoItem.swift
 //  ProjectManager
 //
-//  Created by brad, bard on 2022/09/19.
+//  Created by bard on 2022/09/25.
 //
 
 import Foundation
+import RealmSwift
 
-struct ToDoItem: Codable, Equatable {
+class ToDoItem: Object, Codable {
+    @objc dynamic var uuid: UUID = UUID()
+    @objc dynamic var title: String = ""
+    @objc dynamic var toDoDescription: String = ""
+    @objc dynamic var timeLimit: Date = Date()
     
-    // MARK: - Properties
+    override init() { }
     
-    private let uuid = UUID()
-    let title: String
-    let description: String
-    let timeLimit: Date
-    
-    // MARK: - Initializers
-    
-    init(from decoder: Decoder) throws {
+    required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        title = try container.decode(String.self, forKey: .title)
-        description = try container.decode(String.self, forKey: .description)
-        timeLimit = try container.decode(Date.self, forKey: .timeLimit)
+        self.title = try container.decode(String.self, forKey: .title)
+        self.toDoDescription = try container.decode(String.self, forKey: .toDoDescription)
+        self.timeLimit = try container.decode(Date.self, forKey: .timeLimit)
     }
     
-    init(title: String = "", description: String = "", timeLimit: Date = Date()) {
-        self.title = title
-        self.description = description
-        self.timeLimit = timeLimit
-    }
-    
-    // MARK: - CodingKey
-
     private enum CodingKeys: CodingKey {
-        
-        case title
-        case description
-        case timeLimit
+            case title
+            case toDoDescription
+            case timeLimit
+        }
+}
+
+class RealmToDoItem: ToDoItem { }
+
+final class RealmDoingItem: ToDoItem { }
+
+final class RealmDoneItem: ToDoItem { }
+
+extension ToDoItem {
+    func update(with item: ToDoItem) {
+        self.title = item.title
+        self.toDoDescription = item.toDoDescription
+        self.timeLimit = item.timeLimit
     }
 }
