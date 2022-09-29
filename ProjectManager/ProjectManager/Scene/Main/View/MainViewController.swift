@@ -10,7 +10,7 @@ final class MainViewController: UIViewController {
     
     // MARK: - Properties
     
-    private let dataManager = FakeToDoItemManager()
+    private let dataManager = LocalDataManager()
     private lazy var mainViewModel = MainViewModel(with: dataManager)
     
     private lazy var toDoListTableView = ProjectTableView(for: .todo, to: mainViewModel.projectTableViewModel)

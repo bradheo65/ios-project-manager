@@ -5,7 +5,6 @@
 //  Created by brad, bard on 2022/09/19.
 //
 
-import Foundation
 import RealmSwift
 
 class ToDoItem: Object, Codable {

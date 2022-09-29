@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class FakeToDoItemManager: DataManagable {
+final class FakeToDoItemManager {
     // MARK: - Properties
     
     var todoContent: [ToDoItem] = [] {
@@ -50,12 +50,14 @@ final class FakeToDoItemManager: DataManagable {
     }
     
     init() {
-        read()
+        fetch()
     }
-    
-    // MARK: - CRUD
-    
-    func read() {
+}
+
+// MARK: - CRUD
+
+extension FakeToDoItemManager: DataManagable {
+    func fetch() {
         guard let data: ItemListCategory? = JSONDecoder.decodedJson(jsonName: Design.jsonName),
               let mockItem = data else { return }
         todoContent = mockItem.todo

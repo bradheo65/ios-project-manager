@@ -8,8 +8,10 @@
 import Foundation
 import RealmSwift
 
-final class LocalDataManager: DataManagable {
+final class LocalDataManager {
     // MARK: - Properties
+    
+    private let realm = try? Realm()
     
     var todoContent: [ToDoItem] = [] {
         didSet {
@@ -51,61 +53,131 @@ final class LocalDataManager: DataManagable {
     }
     
     init() {
-        read()
+        fetch()
+        print(Realm.Configuration.defaultConfiguration.fileURL!)
     }
-    
-    // MARK: - CRUD
-    
-    func read() {
-        guard let data: ItemListCategory? = JSONDecoder.decodedJson(jsonName: Design.jsonName),
-              let mockItem = data else { return }
-        todoContent = mockItem.todo
-        doingContent = mockItem.doing
-        doneContent = mockItem.done
+}
+
+// MARK: - CRUD
+
+extension LocalDataManager: DataManagable {
+    func fetch() {
+        guard let todoResult = realm?.objects(RealmToDoItem.self) else { return }
+        guard let doingResult = realm?.objects(RealmDoingItem.self) else { return }
+        guard let doneResult = realm?.objects(RealmDoneItem.self) else { return }
+        todoContent = Array(todoResult)
+        doingContent = Array(doingResult)
+        doneContent = Array(doneResult)
     }
     
     func read(from index: Int, of type: ProjectType) -> ToDoItem {
         switch type {
         case .todo:
-            return todoContent.get(index: index) ?? ToDoItem()
+            return todoContent.get(index: index) ?? RealmToDoItem()
         case .doing:
-            return doingContent.get(index: index) ?? ToDoItem()
+            return doingContent.get(index: index) ?? RealmToDoItem()
         case .done:
-            return doneContent.get(index: index) ?? ToDoItem()
+            return doneContent.get(index: index) ?? RealmToDoItem()
         }
     }
     
     func create(with item: ToDoItem, to type: ProjectType) {
         switch type {
         case .todo:
-            todoContent.append(item)
+            let todo = RealmToDoItem()
+            todo.update(with: item)
+            
+            do {
+                try realm?.write {
+                    realm?.add(todo)
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
         case .doing:
-            doingContent.append(item)
+            let todo = RealmDoingItem()
+            todo.update(with: item)
+            
+            do {
+                try realm?.write {
+                    realm?.add(todo)
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
         case .done:
-            doneContent.append(item)
+            let todo = RealmDoneItem()
+            todo.update(with: item)
+            
+            do {
+                try realm?.write {
+                    realm?.add(todo)
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
         }
+        fetch()
     }
     
     func update(item: ToDoItem, from index: Int, of type: ProjectType) {
         switch type {
         case .todo:
-            todoContent[index] = item
+            do {
+                try realm?.write {
+                    todoContent[index].update(with: item)
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
         case .doing:
-            doingContent[index] = item
+            do {
+                try realm?.write {
+                    doingContent[index].update(with: item)
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
         case .done:
-            doneContent[index] = item
+            do {
+                try realm?.write {
+                    doneContent[index].update(with: item)
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
         }
+        fetch()
     }
     
     func delete(index: Int, with type: ProjectType) {
         switch type {
         case .todo:
-            todoContent.remove(at: index)
+            do {
+                try realm?.write {
+                    realm?.delete(todoContent[index])
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
         case .doing:
-            doingContent.remove(at: index)
+            do {
+                try realm?.write {
+                    realm?.delete(doingContent[index])
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
         case .done:
-            doneContent.remove(at: index)
+            do {
+                try realm?.write {
+                    realm?.delete(doneContent[index])
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
         }
+        fetch()
     }
     
     func count(with type: ProjectType) -> Int {
@@ -117,9 +189,5 @@ final class LocalDataManager: DataManagable {
         case .done:
             return doneContent.count
         }
-    }
-    
-    private enum Design {
-        static let jsonName = "MockData"
     }
 }
