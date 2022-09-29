@@ -23,6 +23,7 @@
 		A37C3BAC28CCC6B900CE4F50 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37C3BAB28CCC6B900CE4F50 /* Date+Extension.swift */; };
 		A39C1FD228CE1CB500009A15 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39C1FD128CE1CB500009A15 /* RegistrationViewController.swift */; };
 		A3CEE1E928E5D15D005F7BD8 /* ProjectTableHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CEE1E828E5D15D005F7BD8 /* ProjectTableHeaderViewModel.swift */; };
+		A3CEE1EB28E5D963005F7BD8 /* LocalDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CEE1EA28E5D963005F7BD8 /* LocalDataManager.swift */; };
 		C460FA7A28E5C4AE008CDE35 /* DataManageable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C460FA7928E5C4AE008CDE35 /* DataManageable.swift */; };
 		C7431F0625F51E1D0094C4CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7431F0525F51E1D0094C4CF /* AppDelegate.swift */; };
 		C7431F0825F51E1D0094C4CF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7431F0725F51E1D0094C4CF /* SceneDelegate.swift */; };
@@ -72,6 +73,7 @@
 		A37C3BAB28CCC6B900CE4F50 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		A39C1FD128CE1CB500009A15 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
 		A3CEE1E828E5D15D005F7BD8 /* ProjectTableHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTableHeaderViewModel.swift; sourceTree = "<group>"; };
+		A3CEE1EA28E5D963005F7BD8 /* LocalDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataManager.swift; sourceTree = "<group>"; };
 		C460FA7928E5C4AE008CDE35 /* DataManageable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManageable.swift; sourceTree = "<group>"; };
 		C7431F0225F51E1D0094C4CF /* ProjectManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7431F0525F51E1D0094C4CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 		A3CEE1E628E5CFD9005F7BD8 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				A3CEE1EA28E5D963005F7BD8 /* LocalDataManager.swift */,
 				A37C3BA428CCC2C300CE4F50 /* FakeToDoItemManager.swift */,
 				A37C3BA628CCC3D700CE4F50 /* MockData.json */,
 			);
@@ -424,6 +427,7 @@
 				C7431EFF25F51E1D0094C4CF /* Frameworks */,
 				C7431F0025F51E1D0094C4CF /* Resources */,
 				A334147B28C72D1E0059D133 /* ShellScript */,
+				27360C162FDF78858550D4F7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -511,6 +515,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		27360C162FDF78858550D4F7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ProjectManager/Pods-ProjectManager-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ProjectManager/Pods-ProjectManager-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ProjectManager/Pods-ProjectManager-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		69110746D08F920C0F4EC667 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -558,6 +579,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A334148F28C86AA80059D133 /* ItemListCategory.swift in Sources */,
+				A3CEE1EB28E5D963005F7BD8 /* LocalDataManager.swift in Sources */,
 				A3CEE1E928E5D15D005F7BD8 /* ProjectTableHeaderViewModel.swift in Sources */,
 				A3169E0028DCA2AE002E2DC1 /* ProjectTableViewModel.swift in Sources */,
 				C7431F0A25F51E1D0094C4CF /* MainViewController.swift in Sources */,

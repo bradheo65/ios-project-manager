@@ -5,6 +5,10 @@ target 'ProjectManager' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
   pod 'SwiftLint'
+
+  # Realm
+  pod 'RealmSwift'
+
   # Pods for ProjectManager
 
 end
