@@ -11,7 +11,7 @@ class ProjectDataManager {
     
     // MARK: - Singletone
     
-    private let dataManager = FakeDataManager.shared
+    private let dataManager = LocalDataManager.shared
 
     var todoContent: [ToDoItem] = [] {
         didSet {

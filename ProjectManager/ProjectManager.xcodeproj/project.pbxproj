@@ -23,6 +23,7 @@
 		A37C3BAC28CCC6B900CE4F50 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37C3BAB28CCC6B900CE4F50 /* Date+Extension.swift */; };
 		A389146728F5623B00718F61 /* FakeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A389146628F5623B00718F61 /* FakeService.swift */; };
 		A389146928F562B800718F61 /* ProjectDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A389146828F562B800718F61 /* ProjectDataManager.swift */; };
+		A389146B28F58AFB00718F61 /* LocalDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A389146A28F58AFB00718F61 /* LocalDataManager.swift */; };
 		A39C1FD228CE1CB500009A15 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39C1FD128CE1CB500009A15 /* RegistrationViewController.swift */; };
 		A3CEE1E928E5D15D005F7BD8 /* ProjectTableHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CEE1E828E5D15D005F7BD8 /* ProjectTableHeaderViewModel.swift */; };
 		C460FA7A28E5C4AE008CDE35 /* DataManageable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C460FA7928E5C4AE008CDE35 /* DataManageable.swift */; };
@@ -74,6 +75,7 @@
 		A37C3BAB28CCC6B900CE4F50 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		A389146628F5623B00718F61 /* FakeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeService.swift; sourceTree = "<group>"; };
 		A389146828F562B800718F61 /* ProjectDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDataManager.swift; sourceTree = "<group>"; };
+		A389146A28F58AFB00718F61 /* LocalDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataManager.swift; sourceTree = "<group>"; };
 		A39C1FD128CE1CB500009A15 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
 		A3CEE1E828E5D15D005F7BD8 /* ProjectTableHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTableHeaderViewModel.swift; sourceTree = "<group>"; };
 		C460FA7928E5C4AE008CDE35 /* DataManageable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManageable.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				A389146828F562B800718F61 /* ProjectDataManager.swift */,
+				A389146A28F58AFB00718F61 /* LocalDataManager.swift */,
 				A37C3BA428CCC2C300CE4F50 /* FakeDataManager.swift */,
 			);
 			path = Manager;
@@ -612,6 +615,7 @@
 				A37C3BA528CCC2C300CE4F50 /* FakeDataManager.swift in Sources */,
 				C7431F0825F51E1D0094C4CF /* SceneDelegate.swift in Sources */,
 				A3420F8E28CCD3F2004AFF56 /* ProjectDetailViewController.swift in Sources */,
+				A389146B28F58AFB00718F61 /* LocalDataManager.swift in Sources */,
 				A39C1FD228CE1CB500009A15 /* RegistrationViewController.swift in Sources */,
 				D7971F5028CE196E008C7ADA /* ToDoComponentsView.swift in Sources */,
 				D7E1178B28D8395B006F416C /* ToDoItem.swift in Sources */,
