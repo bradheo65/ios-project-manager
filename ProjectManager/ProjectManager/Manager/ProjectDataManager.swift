@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ProjectDataManager {
+final class ProjectDataManager {
     
     // MARK: - Singletone
     

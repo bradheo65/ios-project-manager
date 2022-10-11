@@ -48,6 +48,13 @@ final class ProjectTableViewModel {
     }
 
     func delete(from index: Int, of type: ProjectType) {
-        projectDataManager.delete(item: todoContent.get(index: index) ?? ToDoItem(), of: type)
+        switch type {
+        case .todo:
+            projectDataManager.delete(item: todoContent.get(index: index) ?? ToDoItem(), of: type)
+        case .doing:
+            projectDataManager.delete(item: doingContent.get(index: index) ?? ToDoItem(), of: type)
+        case .done:
+            projectDataManager.delete(item: doneContent.get(index: index) ?? ToDoItem(), of: type)
+        }
     }
 }

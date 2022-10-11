@@ -173,9 +173,7 @@ extension LocalDataManager: DataManager {
                 
                 fetch()
             }
-            
         case .doing:
-            
             try? realm.write {
                 let predicate = NSPredicate(format: "uuid = %@",
                                             item.uuid as CVarArg)
