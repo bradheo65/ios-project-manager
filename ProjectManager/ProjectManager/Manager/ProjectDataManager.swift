@@ -108,8 +108,8 @@ extension ProjectDataManager: DataManager {
     }
     
     func move(item: ToDoItem, project: ProjectType, to anotherProject: ProjectType) {
-        dataManager.move(item: item, project: project, to: anotherProject)
         remoteDataManager.move(item: item, project: project, to: anotherProject)
+        dataManager.move(item: item, project: project, to: anotherProject)
 
         fetch()
     }
