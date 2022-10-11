@@ -109,9 +109,9 @@ extension FakeDataManager: DataManager {
         case .todo:
             todoContent.removeAll(where: { $0.uuid == item.uuid })
         case .doing:
-            todoContent.removeAll(where: { $0.uuid == item.uuid })
+            doingContent.removeAll(where: { $0.uuid == item.uuid })
         case .done:
-            todoContent.removeAll(where: { $0.uuid == item.uuid })
+            doneContent.removeAll(where: { $0.uuid == item.uuid })
         }
     }
     
