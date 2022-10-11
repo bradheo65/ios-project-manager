@@ -164,8 +164,6 @@ extension LocalDataManager: DataManager {
     func delete(item: ToDoItem, of type: ProjectType) {
         switch type {
         case .todo:
-            print(item.uuid.description)
-
             try? realm.write {
                 let predicate = NSPredicate(format: "uuid = %@",
                                             item.uuid as CVarArg)

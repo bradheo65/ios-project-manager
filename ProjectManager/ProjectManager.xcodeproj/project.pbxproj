@@ -25,6 +25,8 @@
 		A389146928F562B800718F61 /* ProjectDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A389146828F562B800718F61 /* ProjectDataManager.swift */; };
 		A389146B28F58AFB00718F61 /* LocalDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A389146A28F58AFB00718F61 /* LocalDataManager.swift */; };
 		A39C1FD228CE1CB500009A15 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39C1FD128CE1CB500009A15 /* RegistrationViewController.swift */; };
+		A3BA2D9728F5927B00FE8C46 /* RemoteDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA2D9628F5927B00FE8C46 /* RemoteDataManager.swift */; };
+		A3BA2D9B28F594E000FE8C46 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A3BA2D9A28F594E000FE8C46 /* GoogleService-Info.plist */; };
 		A3CEE1E928E5D15D005F7BD8 /* ProjectTableHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CEE1E828E5D15D005F7BD8 /* ProjectTableHeaderViewModel.swift */; };
 		C460FA7A28E5C4AE008CDE35 /* DataManageable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C460FA7928E5C4AE008CDE35 /* DataManageable.swift */; };
 		C7431F0625F51E1D0094C4CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7431F0525F51E1D0094C4CF /* AppDelegate.swift */; };
@@ -77,6 +79,8 @@
 		A389146828F562B800718F61 /* ProjectDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDataManager.swift; sourceTree = "<group>"; };
 		A389146A28F58AFB00718F61 /* LocalDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataManager.swift; sourceTree = "<group>"; };
 		A39C1FD128CE1CB500009A15 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
+		A3BA2D9628F5927B00FE8C46 /* RemoteDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDataManager.swift; sourceTree = "<group>"; };
+		A3BA2D9A28F594E000FE8C46 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A3CEE1E828E5D15D005F7BD8 /* ProjectTableHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTableHeaderViewModel.swift; sourceTree = "<group>"; };
 		C460FA7928E5C4AE008CDE35 /* DataManageable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManageable.swift; sourceTree = "<group>"; };
 		C7431F0225F51E1D0094C4CF /* ProjectManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -190,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				A389146828F562B800718F61 /* ProjectDataManager.swift */,
+				A3BA2D9628F5927B00FE8C46 /* RemoteDataManager.swift */,
 				A389146A28F58AFB00718F61 /* LocalDataManager.swift */,
 				A37C3BA428CCC2C300CE4F50 /* FakeDataManager.swift */,
 			);
@@ -383,6 +388,7 @@
 				C7431F0525F51E1D0094C4CF /* AppDelegate.swift */,
 				C7431F0725F51E1D0094C4CF /* SceneDelegate.swift */,
 				C7431F1325F51E1E0094C4CF /* Info.plist */,
+				A3BA2D9A28F594E000FE8C46 /* GoogleService-Info.plist */,
 				C7431F0E25F51E1E0094C4CF /* Assets.xcassets */,
 				D7C465D228C72286004B64F7 /* LaunchScreen.storyboard */,
 			);
@@ -516,6 +522,7 @@
 				A37C3BA728CCC3D700CE4F50 /* FakeData.json in Resources */,
 				C7431F0F25F51E1E0094C4CF /* Assets.xcassets in Resources */,
 				D7C465D328C72286004B64F7 /* LaunchScreen.storyboard in Resources */,
+				A3BA2D9B28F594E000FE8C46 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -597,6 +604,7 @@
 				A3169E0028DCA2AE002E2DC1 /* ProjectTableViewModel.swift in Sources */,
 				C7431F0A25F51E1D0094C4CF /* MainViewController.swift in Sources */,
 				C7431F0625F51E1D0094C4CF /* AppDelegate.swift in Sources */,
+				A3BA2D9728F5927B00FE8C46 /* RemoteDataManager.swift in Sources */,
 				D7E75DA428D0AC8100C32947 /* ProjectTableHeaderView.swift in Sources */,
 				D7A8DA6128D5B04F00968726 /* AlertViewController.swift in Sources */,
 				C460FA7A28E5C4AE008CDE35 /* DataManageable.swift in Sources */,

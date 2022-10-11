@@ -12,6 +12,7 @@ final class ProjectDataManager {
     // MARK: - Singletone
     
     private let dataManager = LocalDataManager.shared
+    let remoteDataManager = RemoteDataManager()
 
     var todoContent: [ToDoItem] = [] {
         didSet {
@@ -86,18 +87,21 @@ final class ProjectDataManager {
 extension ProjectDataManager: DataManager {
     
     func create(new item: ToDoItem, to type: ProjectType) {
+        remoteDataManager.create(new: item, to: type)
         dataManager.create(new: item, to: type)
 
         fetch()
     }
     
     func update(item: ToDoItem, from index: Int, of type: ProjectType) {
+        remoteDataManager.update(item: item, from: index, of: type)
         dataManager.update(item: item, from: index, of: type)
 
         fetch()
     }
     
     func delete(item: ToDoItem, of type: ProjectType) {
+        remoteDataManager.delete(item: item, of: type)
         dataManager.delete(item: item, of: type)
 
         fetch()
@@ -105,6 +109,7 @@ extension ProjectDataManager: DataManager {
     
     func move(item: ToDoItem, project: ProjectType, to anotherProject: ProjectType) {
         dataManager.move(item: item, project: project, to: anotherProject)
+        remoteDataManager.move(item: item, project: project, to: anotherProject)
 
         fetch()
     }
