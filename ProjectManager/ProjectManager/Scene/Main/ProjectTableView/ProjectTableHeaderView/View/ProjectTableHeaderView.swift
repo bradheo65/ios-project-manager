@@ -9,10 +9,9 @@ import UIKit
 
 final class ProjectTableHeaderView: UIView {
    
-    let projectTableHeaderViewModel: ProjectTableHeaderViewModel
-    private let projectType: ProjectType
-    
     // MARK: - Properties
+    private let projectTableHearderViewModel = ProjectTableHeaderViewModel()
+    private var projectType: ProjectType = .todo
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -35,17 +34,14 @@ final class ProjectTableHeaderView: UIView {
     
     // MARK: - Initializers
     
-    init(with project: ProjectType, to viewModel: ProjectTableHeaderViewModel) {
-        self.projectTableHeaderViewModel = viewModel
-        self.projectType = project
+    init(with project: ProjectType) {
         super.init(frame: .zero)
+        projectType = project
         titleLabel.text = projectType.titleLabel
         commonInit()
     }
     
     required init?(coder: NSCoder) {
-        self.projectTableHeaderViewModel = ProjectTableHeaderViewModel(dataManager: FakeToDoItemManager())
-        self.projectType = .todo
         super.init(coder: coder)
         commonInit()
     }
@@ -59,8 +55,9 @@ final class ProjectTableHeaderView: UIView {
     
     // MARK: - Functions
     
-    func setupLabel() {
-        indexLabel.text = projectTableHeaderViewModel.count(of: projectType)
+    func setupIndexLabel2() {
+        projectTableHearderViewModel.fetch()
+        indexLabel.text = projectTableHearderViewModel.count(of: projectType).description
     }
     
     private func setupViewComponents() {

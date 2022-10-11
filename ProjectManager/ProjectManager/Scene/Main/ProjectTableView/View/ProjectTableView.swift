@@ -11,28 +11,26 @@ final class ProjectTableView: UITableView {
     
     // MARK: - Properties
     
-    var presentDelegate: Presentable?
+    var presetDelegate: Presentable?
     
     private let projectType: ProjectType
     
     private var projectHeaderView: ProjectTableHeaderView
     
-    private let projectTableViewModel: ProjectTableViewModel
+    private let projectTableViewModel = ProjectTableViewModel()
     
     // MARK: Initializers
     
-    init(for projectType: ProjectType, to viewModel: ProjectTableViewModel) {
+    init(for projectType: ProjectType) {
         self.projectType = projectType
-        self.projectTableViewModel = viewModel
-        projectHeaderView = ProjectTableHeaderView(with: projectType, to: viewModel.projectHeaderViewModel)
+        projectHeaderView = ProjectTableHeaderView(with: projectType)
         super.init(frame: .zero, style: .plain)
         commonInit()
     }
     
     required init?(coder: NSCoder) {
         projectType = .todo
-        projectTableViewModel = ProjectTableViewModel(dataManager: FakeToDoItemManager())
-        projectHeaderView = ProjectTableHeaderView(with: .todo, to: ProjectTableHeaderViewModel(dataManager: FakeToDoItemManager()))
+        projectHeaderView = ProjectTableHeaderView(with: .todo)
         super.init(coder: coder)
     }
     
@@ -54,14 +52,18 @@ final class ProjectTableView: UITableView {
         return projectType.titleLabel
     }
     
+    func fetch() {
+        projectTableViewModel.fetch()
+    }
+    
     func setupIndexLabel() {
         switch projectType {
         case .todo:
-            projectHeaderView.setupLabel()
+            projectHeaderView.setupIndexLabel2()
         case .doing:
-            projectHeaderView.setupLabel()
+            projectHeaderView.setupIndexLabel2()
         case .done:
-            projectHeaderView.setupLabel()
+            projectHeaderView.setupIndexLabel2()
         }
     }
     
@@ -86,16 +88,15 @@ final class ProjectTableView: UITableView {
         
         let alertController = AlertViewController(with: projectType,
                                                   by: indexPath,
-                                                  tableView: self,
-                                                  viewModel: projectTableViewModel.alertViewModel)
+                                                  tableView: self)
         guard let popoverController = alertController.popoverPresentationController else { return }
-        
+
         let cell = cellForRow(at: indexPath)
-        
+
         popoverController.sourceView = cell
         popoverController.sourceRect = cell?.bounds ?? Design.defaultRect
         
-        presentDelegate?.presentAlert(alertController)
+        presetDelegate?.presentAlert(alertController)
     }
     
     // MARK: - Name Space
@@ -131,7 +132,7 @@ extension ProjectTableView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let toDoListDetailViewController = ProjectDetailViewController(with: tableView, viewModel: projectTableViewModel)
+        let toDoListDetailViewController = ProjectDetailViewController(with: tableView)
         let navigationController = UINavigationController(rootViewController: toDoListDetailViewController)
         
         toDoListDetailViewController.modalPresentationStyle = .formSheet
@@ -139,7 +140,7 @@ extension ProjectTableView: UITableViewDelegate, UITableViewDataSource {
         toDoListDetailViewController.loadData(of: projectTableViewModel.searchContent(from: indexPath.row,
                                                                                       of: projectType))
         toDoListDetailViewController.sendData(of: projectType, in: indexPath.row)
-        presentDelegate?.presentDetail(navigationController)
+        presetDelegate?.presentDetail(navigationController)
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

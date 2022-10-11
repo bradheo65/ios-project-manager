@@ -11,30 +11,29 @@ final class AlertViewModel {
     
     // MARK: - Properties
 
-    private let dataManager: DataManagable
-    
-    init(dataManager: DataManagable) {
-        self.dataManager = dataManager
-    }
-    
-    // MARK: - Functions
+    private let projectDataManager = ProjectDataManager()
+    private var todoContent: [ToDoItem] = []
+    private var doingContent: [ToDoItem] = []
+    private var doneContent: [ToDoItem] = []
 
-    func searchContent(from index: Int, of type: ProjectType) -> ToDoItem {
-        dataManager.read(from: index, of: type)
-    }
+    // MARK: - Functions
     
-    func append(new item: ToDoItem, to type: ProjectType) {
-        dataManager.create(with: item, to: type)
-    }
-    
-    func delete(from index: Int, of type: ProjectType) {
-        dataManager.delete(index: index, with: type)
+    func fetch() {
+        self.todoContent = projectDataManager.todoFetch()
+        self.doingContent = projectDataManager.doingFetch()
+        self.doneContent = projectDataManager.doneFetch()
     }
     
     func move(project: ProjectType, in index: IndexPath, to anotherProject: ProjectType) {
-        let movingContent = searchContent(from: index.row, of: project)
-
-        append(new: movingContent, to: anotherProject)
-        delete(from: index.row, of: project)
+        fetch()
+        switch project {
+        case .todo:
+            projectDataManager.move(item: todoContent.get(index: index.row) ?? ToDoItem(), project: project, to: anotherProject)
+        case .doing:
+            projectDataManager.move(item: doingContent.get(index: index.row) ?? ToDoItem(), project: project, to: anotherProject)
+        case .done:
+            projectDataManager.move(item: doneContent.get(index: index.row) ?? ToDoItem(), project: project, to: anotherProject)
+        }
+        fetch()
     }
 }

@@ -11,31 +11,43 @@ final class ProjectTableViewModel {
     
     // MARK: - Properties
     
-    private let dataManager: DataManagable
-    
-    lazy var projectHeaderViewModel = ProjectTableHeaderViewModel(dataManager: dataManager)
-    lazy var projectDetailViewModel = ProjectDetailViewModel(dataManager: dataManager)
-    lazy var alertViewModel = AlertViewModel(dataManager: dataManager)
-    
-    init(dataManager: DataManagable) {
-        self.dataManager = dataManager
-    }
-    
-    // MARK: - Functions
+    private let projectDataManager = ProjectDataManager()
 
+    private var todoContent: [ToDoItem] = []
+    private var doingContent: [ToDoItem] = []
+    private var doneContent: [ToDoItem] = []
+
+    // MARK: - Functions
+    
+    func fetch() {
+        self.todoContent = projectDataManager.todoFetch()
+        self.doingContent = projectDataManager.doingFetch()
+        self.doneContent = projectDataManager.doneFetch()
+    }
+    
     func count(of type: ProjectType) -> Int {
-        return dataManager.count(with: type)
+        switch type {
+        case .todo:
+            return todoContent.count
+        case .doing:
+            return doingContent.count
+        case .done:
+            return doneContent.count
+        }
     }
-    
+
     func searchContent(from index: Int, of type: ProjectType) -> ToDoItem {
-        return dataManager.read(from: index, of: type)
+        switch type {
+        case .todo:
+            return todoContent.get(index: index) ?? ToDoItem()
+        case .doing:
+            return doingContent.get(index: index) ?? ToDoItem()
+        case .done:
+            return doneContent.get(index: index) ?? ToDoItem()
+        }
     }
-    
-    func update(item: ToDoItem, from index: Int, of type: ProjectType) {
-        dataManager.update(item: item, from: index, of: type)
-    }
-    
+
     func delete(from index: Int, of type: ProjectType) {
-        dataManager.delete(index: index, with: type)
+        projectDataManager.delete(item: todoContent.get(index: index) ?? ToDoItem(), of: type)
     }
 }

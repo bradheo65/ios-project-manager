@@ -6,38 +6,45 @@
 //
 
 import Foundation
+import RealmSwift
 
-struct ToDoItem: Codable {
+class ToDoItem: Object, Codable {
     
     // MARK: - Properties
     
-    private let uuid = UUID()
-    let title: String
-    let toDoDescription: String
-    let timeLimit: Date
+    @objc dynamic var uuid: UUID = UUID()
+    @objc dynamic var title: String = ""
+    @objc dynamic var todoDescription: String = ""
+    @objc dynamic var timeLimit: Date = Date()
     
-    // MARK: - Initializers
+    override init() { }
     
-    init(from decoder: Decoder) throws {
+    required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        title = try container.decode(String.self, forKey: .title)
-        toDoDescription = try container.decode(String.self, forKey: .toDoDescription)
-        timeLimit = try container.decode(Date.self, forKey: .timeLimit)
+        self.title = try container.decode(String.self, forKey: .title)
+        self.todoDescription = try container.decode(String.self, forKey: .todoDescription)
+        self.timeLimit = try container.decode(Date.self, forKey: .timeLimit)
     }
-    
-    init(title: String = "", toDoDescription: String = "", timeLimit: Date = Date()) {
-        self.title = title
-        self.toDoDescription = toDoDescription
-        self.timeLimit = timeLimit
-    }
-    
-    // MARK: - CodingKey
+}
 
-    private enum CodingKeys: CodingKey {
-        
-        case title
-        case toDoDescription
-        case timeLimit
+final class RealmToDoItem: ToDoItem { }
+
+final class RealmDoingItem: ToDoItem { }
+
+final class RealmDoneItem: ToDoItem { }
+
+extension ToDoItem {
+    func append(with item: ToDoItem) {
+        self.uuid = item.uuid
+        self.title = item.title
+        self.todoDescription = item.todoDescription
+        self.timeLimit = item.timeLimit
+    }
+    
+    func update(with item: ToDoItem) {
+        self.uuid = item.uuid
+        self.title = item.title
+        self.todoDescription = item.todoDescription
+        self.timeLimit = item.timeLimit
     }
 }

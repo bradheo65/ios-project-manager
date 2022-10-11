@@ -68,7 +68,7 @@ final class ProjectTableViewCell: UITableViewCell {
     
     func configure(data: ToDoItem, type: ProjectType) {
         titleLabel.text = data.title
-        descriptionLabel.text = data.toDoDescription
+        descriptionLabel.text = data.todoDescription
         timeLimitLabel.text = data.timeLimit.formatDate()
         
         guard type != .done else { return }

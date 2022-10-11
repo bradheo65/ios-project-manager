@@ -2,21 +2,19 @@
 //  ProjectManager - ViewController.swift
 //  Created by brad, bard.
 //  Copyright © yagom. All rights reserved.
-// 
+//
 
 import UIKit
 
 final class MainViewController: UIViewController {
     
     // MARK: - Properties
+    private let mainViewModel = MainViewModel()
+
+    private lazy var toDoListTableView = ProjectTableView(for: .todo)
+    private lazy var doingListTableView = ProjectTableView(for: .doing)
+    private lazy var doneListTableView = ProjectTableView(for: .done)
     
-    private let dataManager = FakeToDoItemManager()
-    private lazy var mainViewModel = MainViewModel(with: dataManager)
-    
-    private lazy var toDoListTableView = ProjectTableView(for: .todo, to: mainViewModel.projectTableViewModel)
-    private lazy var doingListTableView = ProjectTableView(for: .doing, to: mainViewModel.projectTableViewModel)
-    private lazy var doneListTableView = ProjectTableView(for: .done, to: mainViewModel.projectTableViewModel)
-        
     private let horizontalStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -29,12 +27,13 @@ final class MainViewController: UIViewController {
     }()
     
     // MARK: - Life cycles
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupSubscripting()
         setupDelegates()
         setupUI()
+        binding()
+        mainViewModel.binding()
     }
     
     // MARK: - Functions
@@ -44,19 +43,22 @@ final class MainViewController: UIViewController {
         setupVerticalStackViewLayout()
         setupView()
     }
-    
-    private func setupSubscripting() {
-        dataManager.todoSubscripting { [weak self] _ in
+
+    private func binding() {
+        mainViewModel.todoSubscripting { [weak self] _ in
+            self?.toDoListTableView.fetch()
             self?.toDoListTableView.reloadData()
             self?.toDoListTableView.setupIndexLabel()
         }
         
-        dataManager.doingSubscripting { [weak self] _ in
+        mainViewModel.doingSubscripting { [weak self] _ in
+            self?.doingListTableView.fetch()
             self?.doingListTableView.reloadData()
             self?.doingListTableView.setupIndexLabel()
         }
         
-        dataManager.doneSubscripting { [weak self] _ in
+        mainViewModel.doneSubscripting { [weak self] _ in
+            self?.doneListTableView.fetch()
             self?.doneListTableView.reloadData()
             self?.doneListTableView.setupIndexLabel()
         }
@@ -64,7 +66,7 @@ final class MainViewController: UIViewController {
     
     private func setupDelegates() {
         [toDoListTableView, doingListTableView, doneListTableView]
-            .forEach { $0.presentDelegate = self }
+            .forEach { $0.presetDelegate = self }
     }
     
     private func setupSubviews() {
@@ -97,25 +99,46 @@ final class MainViewController: UIViewController {
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: Design.navigationTitleFontSize, weight: .bold)
         ]
         
+        let leftBarButton = UIBarButtonItem(title: "history",
+                                            style: .plain,
+                                            target: self,
+                                            action: #selector(didHistoryButtonTapped))
+        
         let rightBarButton = UIBarButtonItem(image: UIImage(systemName: Design.plusImage),
                                              style: .plain,
                                              target: self,
                                              action: #selector(didPlusButtonTapped))
-        
+  
+        navigationItem.leftBarButtonItem = leftBarButton
         navigationItem.rightBarButtonItem = rightBarButton
     }
 
     // MARK: - objc Functions
     
     @objc private func didPlusButtonTapped() {
-        let registrationViewController = RegistrationViewController(with: mainViewModel.registrationViewModel)
+
+        let registrationViewController = RegistrationViewController()
         let navigationController = UINavigationController(rootViewController: registrationViewController)
         
         registrationViewController.modalPresentationStyle = .formSheet
         
         present(navigationController, animated: true)
     }
-    
+        
+    @objc private func didHistoryButtonTapped() {
+        
+//        let tableViewController = HistoryViewController()
+//        tableViewController.modalPresentationStyle = UIModalPresentationStyle.popover
+//        // tableViewController.preferredContentSize = CGSize(width: 400, height: 400)
+//        
+//        tableViewController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.up
+//        tableViewController.popoverPresentationController?.delegate = self
+//        tableViewController.popoverPresentationController?.sourceView = self.view // button
+//        tableViewController.popoverPresentationController?.sourceRect = self.view.bounds
+//        
+//        // present the popover
+//        self.present(tableViewController, animated: true, completion: nil)
+    }
     // MARK: - Name Space
     
     private enum Design {
@@ -139,4 +162,12 @@ extension MainViewController: Presentable {
     func presentDetail(_ viewController: UIViewController) {
         present(viewController, animated: true)
     }
+}
+
+extension MainViewController: UIPopoverPresentationControllerDelegate {
+        
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.popover
+    }
+    
 }

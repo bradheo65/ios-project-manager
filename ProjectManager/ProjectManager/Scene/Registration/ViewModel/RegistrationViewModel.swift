@@ -6,18 +6,14 @@
 //
 
 final class RegistrationViewModel {
-
+    
     // MARK: - Properties
     
-    private let dataManager: DataManagable
-    
-    init(dataManager: DataManagable) {
-        self.dataManager = dataManager
-    }
+    private let projectDataManager = ProjectDataManager()
     
     // MARK: - Functions
-
+    
     func append(new item: ToDoItem, to type: ProjectType) {
-        dataManager.create(with: item, to: type)
+        projectDataManager.create(new: item, to: type)
     }
 }

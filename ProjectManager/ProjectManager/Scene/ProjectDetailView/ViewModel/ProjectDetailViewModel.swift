@@ -7,19 +7,15 @@
 
 import Foundation
 
-class ProjectDetailViewModel {
+final class ProjectDetailViewModel {
     
-    private let dataManager: DataManagable
+    // MARK: - Properties
     
-    init(dataManager: DataManagable) {
-        self.dataManager = dataManager
-    }
+    private let projectDataManager = ProjectDataManager()
     
-    func append(new item: ToDoItem, to type: ProjectType) {
-        dataManager.create(with: item, to: type)
-    }
+    // MARK: - Functions
     
     func update(item: ToDoItem, from index: Int, of type: ProjectType) {
-        dataManager.update(item: item, from: index, of: type)
+        projectDataManager.update(item: item, from: index, of: type)
     }
 }

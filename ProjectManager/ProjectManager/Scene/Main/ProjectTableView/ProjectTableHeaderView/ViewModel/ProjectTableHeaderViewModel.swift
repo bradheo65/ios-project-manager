@@ -9,14 +9,30 @@ import Foundation
 
 final class ProjectTableHeaderViewModel {
     
-    private let dataManager: DataManagable
+    private let projectManager = ProjectDataManager()
     
-    init(dataManager: DataManagable) {
-        self.dataManager = dataManager
+    private var todoContent: [ToDoItem] = []
+    private var doingContent: [ToDoItem] = []
+    private var doneContent: [ToDoItem] = []
+    
+    init() { }
+    
+    // MARK: - Functions
+    
+    func fetch() {
+        todoContent = projectManager.todoFetch()
+        doingContent = projectManager.doingFetch()
+        doneContent = projectManager.doneFetch()
     }
     
-    func count(of type: ProjectType) -> String {
-        let count = dataManager.count(with: type).description
-        return count
+    func count(of type: ProjectType) -> Int {
+        switch type {
+        case .todo:
+            return todoContent.count
+        case .doing:
+            return doingContent.count
+        case .done:
+            return doneContent.count
+        }
     }
 }

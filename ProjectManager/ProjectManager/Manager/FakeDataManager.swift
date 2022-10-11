@@ -7,22 +7,28 @@
 
 import Foundation
 
-final class FakeToDoItemManager: DataManagable {
+final class FakeDataManager {
+    
     // MARK: - Properties
     
-    var todoContent: [ToDoItem] = [] {
+    static let shared = FakeDataManager()
+    private var fakeService = FakeService()
+
+    // MARK: - Properties
+    
+    private var todoContent: [ToDoItem] = [] {
         didSet {
             todoListener?(todoContent)
         }
     }
     
-    var doingContent: [ToDoItem] = [] {
+    private var doingContent: [ToDoItem] = [] {
         didSet {
             doingListener?(doingContent)
         }
     }
     
-    var doneContent: [ToDoItem] = [] {
+    private var doneContent: [ToDoItem] = [] {
         didSet {
             doneListener?(doneContent)
         }
@@ -31,6 +37,12 @@ final class FakeToDoItemManager: DataManagable {
     private var todoListener: (([ToDoItem]) -> Void)?
     private var doingListener: (([ToDoItem]) -> Void)?
     private var doneListener: (([ToDoItem]) -> Void)?
+    
+    // MARK: - Initializers
+    
+    private init() {
+        // fetch()
+    }
     
     // MARK: - Functions
     
@@ -49,32 +61,28 @@ final class FakeToDoItemManager: DataManagable {
         self.doneListener = listener
     }
     
-    init() {
-        read()
+    func fetch() {
+        todoContent = fakeService.loadData().todo
+        doingContent = fakeService.loadData().doing
+        doneContent = fakeService.loadData().done
     }
     
-    // MARK: - CRUD
-    
-    func read() {
-        guard let data: ItemListCategory? = JSONDecoder.decodedJson(jsonName: Design.jsonName),
-              let mockItem = data else { return }
-        todoContent = mockItem.todo
-        doingContent = mockItem.doing
-        doneContent = mockItem.done
+    func todoFetch() -> [ToDoItem] {
+        return todoContent
     }
     
-    func read(from index: Int, of type: ProjectType) -> ToDoItem {
-        switch type {
-        case .todo:
-            return todoContent.get(index: index) ?? ToDoItem()
-        case .doing:
-            return doingContent.get(index: index) ?? ToDoItem()
-        case .done:
-            return doneContent.get(index: index) ?? ToDoItem()
-        }
+    func doingFetch() -> [ToDoItem] {
+        return doingContent
     }
     
-    func create(with item: ToDoItem, to type: ProjectType) {
+    func doneFetch() -> [ToDoItem] {
+        return doneContent
+    }
+}
+
+extension FakeDataManager: DataManager {
+ 
+    func create(new item: ToDoItem, to type: ProjectType) {
         switch type {
         case .todo:
             todoContent.append(item)
@@ -96,29 +104,20 @@ final class FakeToDoItemManager: DataManagable {
         }
     }
     
-    func delete(index: Int, with type: ProjectType) {
+    func delete(item: ToDoItem, of type: ProjectType) {
         switch type {
         case .todo:
-            todoContent.remove(at: index)
+            todoContent.removeAll(where: { $0.uuid == item.uuid })
         case .doing:
-            doingContent.remove(at: index)
+            todoContent.removeAll(where: { $0.uuid == item.uuid })
         case .done:
-            doneContent.remove(at: index)
+            todoContent.removeAll(where: { $0.uuid == item.uuid })
         }
     }
     
-    func count(with type: ProjectType) -> Int {
-        switch type {
-        case .todo:
-            return todoContent.count
-        case .doing:
-            return doingContent.count
-        case .done:
-            return doneContent.count
-        }
-    }
-    
-    private enum Design {
-        static let jsonName = "MockData"
+    func move(item: ToDoItem, project: ProjectType, to anotherProject: ProjectType) {
+        
+        create(new: item, to: anotherProject)
+        delete(item: item, of: project)
     }
 }
