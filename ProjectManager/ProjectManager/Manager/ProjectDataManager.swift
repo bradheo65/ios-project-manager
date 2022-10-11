@@ -12,21 +12,21 @@ final class ProjectDataManager {
     // MARK: - Singletone
     
     private let dataManager = LocalDataManager.shared
-    let remoteDataManager = RemoteDataManager()
+    private let remoteDataManager = RemoteDataManager()
 
-    var todoContent: [ToDoItem] = [] {
+    private var todoContent: [ToDoItem] = [] {
         didSet {
             todoListener?(todoContent)
         }
     }
     
-    var doingContent: [ToDoItem] = [] {
+    private var doingContent: [ToDoItem] = [] {
         didSet {
             doingListener?(doingContent)
         }
     }
     
-    var doneContent: [ToDoItem] = [] {
+    private var doneContent: [ToDoItem] = [] {
         didSet {
             doneListener?(doneContent)
         }
