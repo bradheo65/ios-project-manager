@@ -12,7 +12,7 @@ final class RemoteDataManager {
     let firestoreDB = Firestore.firestore()
 }
 
-extension RemoteDataManager {
+extension RemoteDataManager: DataManager {
     
     func create(new item: ToDoItem, to type: ProjectType) {
         
