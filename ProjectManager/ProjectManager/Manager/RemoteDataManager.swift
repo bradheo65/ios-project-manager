@@ -17,7 +17,6 @@ extension RemoteDataManager {
     func create(new item: ToDoItem, to type: ProjectType) {
         
         switch type {
-            
         case .todo:
             let todoCollection = firestoreDB.collection("todoList").document(item.uuid.description)
 
@@ -47,7 +46,6 @@ extension RemoteDataManager {
     
     func update(item: ToDoItem, from index: Int, of type: ProjectType) {
         switch type {
-            
         case .todo:
             let todoCollection = firestoreDB.collection("todoList")
             
@@ -76,22 +74,17 @@ extension RemoteDataManager {
     }
 
     func delete(item: ToDoItem, of type: ProjectType) {
-
         switch type {
-            
         case .todo:
             firestoreDB.collection("todoList").document(item.uuid.uuidString).delete()
-
         case .doing:
             firestoreDB.collection("doingList").document(item.uuid.uuidString).delete()
-
         case .done:
             firestoreDB.collection("doneList").document(item.uuid.uuidString).delete()
         }
     }
     
     func move(item: ToDoItem, project: ProjectType, to anotherProject: ProjectType) {
-        
         create(new: item, to: anotherProject)
         delete(item: item, of: project)
     }

@@ -87,7 +87,6 @@ extension LocalDataManager: DataManager {
 
     func create(new item: ToDoItem, to type: ProjectType) {
         switch type {
-            
         case .todo:
             let todo = RealmToDoItem()
             
@@ -168,26 +167,21 @@ extension LocalDataManager: DataManager {
                 let predicate = NSPredicate(format: "uuid = %@",
                                             item.uuid as CVarArg)
                 realm.delete(realm.objects(RealmToDoItem.self).filter(predicate))
-                
-                fetch()
             }
         case .doing:
             try? realm.write {
                 let predicate = NSPredicate(format: "uuid = %@",
                                             item.uuid as CVarArg)
                 realm.delete(realm.objects(RealmDoingItem.self).filter(predicate))
-                
-                fetch()
             }
         case .done:
             try? realm.write {
                 let predicate = NSPredicate(format: "uuid = %@",
                                             item.uuid as CVarArg)
                 realm.delete(realm.objects(RealmDoneItem.self).filter(predicate))
-                
-                fetch()
             }
         }
+        fetch()
     }
     
     func move(item: ToDoItem, project: ProjectType, to anotherProject: ProjectType) {
