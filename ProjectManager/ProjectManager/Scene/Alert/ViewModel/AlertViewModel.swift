@@ -34,6 +34,5 @@ final class AlertViewModel {
         case .done:
             projectDataManager.move(item: doneContent.get(index: index.row) ?? ToDoItem(), project: project, to: anotherProject)
         }
-        fetch()
     }
 }
