@@ -13,8 +13,6 @@ final class FakeDataManager {
     
     static let shared = FakeDataManager()
     private var fakeService = FakeService()
-
-    // MARK: - Properties
     
     private var todoContent: [ToDoItem] = [] {
         didSet {
@@ -41,7 +39,7 @@ final class FakeDataManager {
     // MARK: - Initializers
     
     private init() {
-        // fetch()
+        fetch()
     }
     
     // MARK: - Functions
@@ -82,6 +80,8 @@ final class FakeDataManager {
 
 extension FakeDataManager: DataManager {
  
+    // MARK: - Functions
+    
     func create(new item: ToDoItem, to type: ProjectType) {
         switch type {
         case .todo:
@@ -116,7 +116,6 @@ extension FakeDataManager: DataManager {
     }
     
     func move(item: ToDoItem, project: ProjectType, to anotherProject: ProjectType) {
-        
         create(new: item, to: anotherProject)
         delete(item: item, of: project)
     }

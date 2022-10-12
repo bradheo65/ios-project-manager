@@ -9,10 +9,15 @@ import Foundation
 import FirebaseFirestore
 
 final class RemoteDataManager {
+    
+    // MARK: - Properties
+    
     let firestoreDB = Firestore.firestore()
 }
 
 extension RemoteDataManager: DataManager {
+    
+    // MARK: - Functions
     
     func create(new item: ToDoItem, to type: ProjectType) {
         
