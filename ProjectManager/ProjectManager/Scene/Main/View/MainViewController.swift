@@ -98,18 +98,12 @@ final class MainViewController: UIViewController {
         navigationController?.navigationBar.titleTextAttributes = [
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: Design.navigationTitleFontSize, weight: .bold)
         ]
-        
-        let leftBarButton = UIBarButtonItem(title: "history",
-                                            style: .plain,
-                                            target: self,
-                                            action: #selector(didHistoryButtonTapped))
-        
+
         let rightBarButton = UIBarButtonItem(image: UIImage(systemName: Design.plusImage),
                                              style: .plain,
                                              target: self,
                                              action: #selector(didPlusButtonTapped))
   
-        navigationItem.leftBarButtonItem = leftBarButton
         navigationItem.rightBarButtonItem = rightBarButton
     }
 
@@ -124,21 +118,7 @@ final class MainViewController: UIViewController {
         
         present(navigationController, animated: true)
     }
-        
-    @objc private func didHistoryButtonTapped() {
-        
-//        let tableViewController = HistoryViewController()
-//        tableViewController.modalPresentationStyle = UIModalPresentationStyle.popover
-//        // tableViewController.preferredContentSize = CGSize(width: 400, height: 400)
-//        
-//        tableViewController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.up
-//        tableViewController.popoverPresentationController?.delegate = self
-//        tableViewController.popoverPresentationController?.sourceView = self.view // button
-//        tableViewController.popoverPresentationController?.sourceRect = self.view.bounds
-//        
-//        // present the popover
-//        self.present(tableViewController, animated: true, completion: nil)
-    }
+    
     // MARK: - Name Space
     
     private enum Design {
