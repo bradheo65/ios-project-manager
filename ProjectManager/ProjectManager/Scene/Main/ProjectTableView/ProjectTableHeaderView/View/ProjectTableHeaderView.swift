@@ -50,7 +50,7 @@ final class ProjectTableHeaderView: UIView {
         setupViewComponents()
         setupSubviews()
         setupConstraints()
-        setupIndexLabel()
+        setupDrawIndexLabel()
     }
     
     // MARK: - Functions
@@ -85,7 +85,7 @@ final class ProjectTableHeaderView: UIView {
         ])
     }
     
-    private func setupIndexLabel() {
+    private func setupDrawIndexLabel() {
         indexLabel.layoutIfNeeded()
         indexLabel.drawCircle()
     }
