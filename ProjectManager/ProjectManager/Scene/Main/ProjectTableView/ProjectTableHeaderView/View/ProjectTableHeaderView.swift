@@ -55,7 +55,7 @@ final class ProjectTableHeaderView: UIView {
     
     // MARK: - Functions
     
-    func setupIndexLabel2() {
+    func setupIndexLabel() {
         projectTableHearderViewModel.fetch()
         indexLabel.text = projectTableHearderViewModel.count(of: projectType).description
     }

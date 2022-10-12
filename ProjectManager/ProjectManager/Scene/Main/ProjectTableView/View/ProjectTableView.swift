@@ -59,11 +59,11 @@ final class ProjectTableView: UITableView {
     func setupIndexLabel() {
         switch projectType {
         case .todo:
-            projectHeaderView.setupIndexLabel2()
+            projectHeaderView.setupIndexLabel()
         case .doing:
-            projectHeaderView.setupIndexLabel2()
+            projectHeaderView.setupIndexLabel()
         case .done:
-            projectHeaderView.setupIndexLabel2()
+            projectHeaderView.setupIndexLabel()
         }
     }
     
