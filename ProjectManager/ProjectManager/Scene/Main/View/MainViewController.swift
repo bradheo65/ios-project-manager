@@ -5,12 +5,14 @@
 //
 
 import UIKit
+import Network
 
 final class MainViewController: UIViewController {
     
     // MARK: - Properties
     private let mainViewModel = MainViewModel()
-
+    private let networkMonitor = NWPathMonitor()
+    
     private lazy var toDoListTableView = ProjectTableView(for: .todo)
     private lazy var doingListTableView = ProjectTableView(for: .doing)
     private lazy var doneListTableView = ProjectTableView(for: .done)
@@ -33,17 +35,18 @@ final class MainViewController: UIViewController {
         setupDelegates()
         setupUI()
         binding()
+        startNetworkConnectionMonitor()
         mainViewModel.binding()
     }
     
     // MARK: - Functions
-    
+
     private func setupUI() {
         setupSubviews()
         setupVerticalStackViewLayout()
         setupView()
     }
-
+    
     private func binding() {
         mainViewModel.todoSubscripting { [weak self] _ in
             self?.toDoListTableView.fetch()
@@ -61,6 +64,32 @@ final class MainViewController: UIViewController {
             self?.doneListTableView.fetch()
             self?.doneListTableView.reloadData()
             self?.doneListTableView.setupIndexLabel()
+        }
+    }
+    
+    private func startNetworkConnectionMonitor() {
+        let alert = UIAlertController(title: "인터넷 연결이 원활하지 않습니다.",
+                                      message: "Wifi 또는 셀룰러를 활성화 해주세요.",
+                                      preferredStyle: .alert)
+        let confirm = UIAlertAction(title: "확인",
+                                    style: .default,
+                                    handler: nil)
+        alert.addAction(confirm)
+        
+        networkMonitor.start(queue: .global())
+        networkMonitor.pathUpdateHandler = { path in
+            if path.status == .satisfied {
+                DispatchQueue.main.async {
+                    self.toDoListTableView.reloadData()
+                    self.doingListTableView.reloadData()
+                    self.doneListTableView.reloadData()
+                }
+                return
+            } else {
+                DispatchQueue.main.async {
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
         }
     }
     
